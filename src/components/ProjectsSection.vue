@@ -32,8 +32,9 @@ const projects: Project[] = [
     description:
       'A fully proctored MCQ exam platform simulating the real ISTQB Foundation Level experience — timed, randomised questions, full-screen enforcement. After submission, get a detailed breakdown of every answer with explanations, score analysis, and topic-level feedback.',
     tags: ['Vue JS', 'PostgreSQL', 'Node.js', 'Exam Engine'],
-    status: 'Planned',
+    status: 'Live',
     category: 'QA',
+    href: 'https://istqbmock.netlify.app',
   },
   {
     title: 'Knowledge Orbit — Community Blog',
