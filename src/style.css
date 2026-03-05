@@ -17,6 +17,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -24,6 +25,7 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  max-width: 100%;
   cursor: none;
 }
 

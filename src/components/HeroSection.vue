@@ -66,6 +66,7 @@ onUnmounted(() => clearTimeout(timeout))
   text-align: center;
   position: relative;
   padding: 2rem;
+  overflow: hidden;
 }
 
 .content {
