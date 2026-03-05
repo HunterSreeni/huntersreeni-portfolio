@@ -124,7 +124,7 @@ onUnmounted(() => clearTimeout(timeout))
   text-transform: uppercase;
   padding: 0.75rem 2.25rem;
   border-radius: 2px;
-  cursor: none;
+  cursor: pointer;
   transition: background 0.25s, border-color 0.25s, color 0.25s;
   animation: float 3s ease-in-out infinite;
 }

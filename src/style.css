@@ -74,6 +74,22 @@ body {
   margin: 0 auto;
 }
 
+@media (max-width: 600px) {
+  .s-section {
+    padding: 5rem 1.25rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
 .s-fade {
   opacity: 0;
   transform: translateY(36px);

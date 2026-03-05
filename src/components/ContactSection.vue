@@ -122,7 +122,7 @@ onMounted(() => {
   background: rgba(255, 255, 255, 0.018);
   text-decoration: none;
   color: inherit;
-  cursor: none;
+  cursor: pointer;
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
 

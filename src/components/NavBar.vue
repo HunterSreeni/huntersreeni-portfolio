@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const scrolled = ref(false)
 const activeSection = ref('hero')
+const menuOpen = ref(false)
 
 const navLinks = [
   { id: 'about', label: 'About' },
@@ -14,6 +15,7 @@ const navLinks = [
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  menuOpen.value = false
 }
 
 function onScroll() {
@@ -39,6 +41,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <span class="bracket">&lt;</span>S<span class="bracket">/&gt;</span>
     </button>
 
+    <!-- Desktop links -->
     <ul class="links">
       <li v-for="link in navLinks" :key="link.id">
         <button
@@ -49,7 +52,35 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         </button>
       </li>
     </ul>
+
+    <!-- Mobile hamburger button -->
+    <button
+      class="hamburger"
+      :class="{ open: menuOpen }"
+      @click="menuOpen = !menuOpen"
+      aria-label="Toggle menu"
+    >
+      <span class="bar" />
+      <span class="bar" />
+      <span class="bar" />
+    </button>
   </nav>
+
+  <!-- Mobile menu overlay -->
+  <div :class="['mobile-menu', { open: menuOpen }]" @click="menuOpen = false">
+    <div class="mobile-menu-inner" @click.stop>
+      <ul class="mobile-links">
+        <li v-for="link in navLinks" :key="link.id">
+          <button
+            :class="['mobile-link', { active: activeSection === link.id }]"
+            @click="scrollTo(link.id)"
+          >
+            {{ link.label }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -81,15 +112,21 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   color: white;
   background: none;
   border: none;
-  cursor: none;
+  cursor: pointer;
   letter-spacing: 0.04em;
   font-weight: 700;
+  z-index: 101;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .logo { cursor: pointer; }
 }
 
 .bracket {
   color: rgba(255, 255, 255, 0.35);
 }
 
+/* Desktop links */
 .links {
   display: flex;
   gap: 0.25rem;
@@ -103,7 +140,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   font-family: var(--font-sans);
   font-size: 0.82rem;
   letter-spacing: 0.04em;
-  cursor: none;
+  cursor: pointer;
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
   transition: color 0.2s, background 0.2s;
@@ -115,16 +152,108 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   background: rgba(255, 255, 255, 0.06);
 }
 
-@media (max-width: 600px) {
+/* Hamburger button — mobile only */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 101;
+}
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger.open .bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.hamburger.open .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open .bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile full-screen menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(8, 8, 15, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobile-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  width: 100%;
+  text-align: center;
+}
+
+.mobile-link:hover,
+.mobile-link.active {
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 640px) {
   .navbar {
     padding: 1rem 1.25rem;
   }
   .navbar.scrolled {
     padding: 0.75rem 1.25rem;
   }
-  .link {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.5rem;
+  .links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .mobile-menu {
+    display: block;
   }
 }
 </style>
