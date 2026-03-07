@@ -34,7 +34,7 @@ const projects: Project[] = [
     tags: ['Vue JS', 'PostgreSQL', 'Node.js', 'Exam Engine'],
     status: 'Live',
     category: 'QA',
-    href: 'https://istqbmock.netlify.app',
+    href: 'https://istqbmock.sreeniverse.co.in',
   },
   {
     title: 'Knowledge Orbit — Community Blog',
